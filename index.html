@@ -79,26 +79,19 @@
 
             <!-- HOT NOVEL Section taking full width -->
             <div class="space-y-6">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <h1 id="library-heading" class="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">HOT NOVEL 🔥</h1>
-                        <p id="library-subheading" class="mt-1 text-slate-400 text-sm">Discover your next favorite story from our curated collection.</p>
-                    </div>
-                    <div class="flex items-center space-x-3">
-                        <button id="clear-filter-btn" onclick="clearGenreFilter()" class="hidden text-xs bg-slate-800 hover:bg-slate-700 text-indigo-400 px-3 py-1.5 rounded-lg border border-slate-700 transition">
-                            <i class="fa-solid fa-xmark mr-1"></i> Clear Filter
-                        </button>
-                    </div>
+                <div>
+                    <h1 id="library-heading" class="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">HOT NOVEL 🔥</h1>
+                    <p id="library-subheading" class="mt-1 text-slate-400 text-sm">Discover your next favorite story from our curated collection.</p>
                 </div>
 
-                <!-- 13-Novel Asymmetric Reference Layout Container -->
-                <div id="hot-novel-container" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- 13-Novel Asymmetric Layout Container matching reference image -->
+                <div id="hot-novel-container" class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
                     <!-- Featured Left Large Card (Spans 4 cols on desktop) -->
-                    <div id="featured-novel-card" class="lg:col-span-4 flex flex-col cursor-pointer group">
+                    <div id="featured-novel-card" class="lg:col-span-4 flex flex-col cursor-pointer group h-full">
                         <!-- Populated dynamically -->
                     </div>
-                    <!-- Right Grid for 12 smaller cards (Spans 8 cols on desktop, 6 columns per row -> 2 rows of 6) -->
-                    <div id="small-novels-grid" class="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                    <!-- Right Grid for 12 smaller cards (Spans 8 cols on desktop, 6 columns per row -> exactly 2 rows of 6) -->
+                    <div id="small-novels-grid" class="lg:col-span-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 content-start">
                         <!-- Populated dynamically -->
                     </div>
                 </div>
@@ -365,7 +358,7 @@
         
         let globalNovels = [];
         let displayedNovels = [];
-        let hotNovelTitles = [];
+        let hotNovelsList = [];
         let allGenresSet = new Set();
         let novelGenresCache = {};
         let currentGenreFilter = null;
@@ -423,6 +416,7 @@
         const modalIcon = document.getElementById('modal-icon');
 
         function showModal(title, message, isError = false) {
+            if (!modalTitle || !modalMessage || !customModal) return;
             modalTitle.textContent = title;
             modalMessage.textContent = message;
             modalIcon.className = `w-12 h-12 rounded-full mx-auto flex items-center justify-center text-xl ${isError ? 'bg-red-500/10 text-red-400' : 'bg-indigo-500/10 text-indigo-400'}`;
@@ -431,7 +425,7 @@
         }
 
         function closeModal() {
-            customModal.classList.add('hidden');
+            if (customModal) customModal.classList.add('hidden');
         }
 
         function copyShareLink() {
@@ -445,17 +439,17 @@
         }
 
         function switchView(viewName) {
-            loadingEl.classList.add('hidden');
-            errorStateEl.classList.add('hidden');
-            novelListView.classList.add('hidden');
-            novelDetailView.classList.add('hidden');
-            chapterReaderView.classList.add('hidden');
+            if (loadingEl) loadingEl.classList.add('hidden');
+            if (errorStateEl) errorStateEl.classList.add('hidden');
+            if (novelListView) novelListView.classList.add('hidden');
+            if (novelDetailView) novelDetailView.classList.add('hidden');
+            if (chapterReaderView) chapterReaderView.classList.add('hidden');
 
-            if (viewName === 'loading') loadingEl.classList.remove('hidden');
-            else if (viewName === 'error') errorStateEl.classList.remove('hidden');
-            else if (viewName === 'list') novelListView.classList.remove('hidden');
-            else if (viewName === 'detail') novelDetailView.classList.remove('hidden');
-            else if (viewName === 'reader') chapterReaderView.classList.remove('hidden');
+            if (viewName === 'loading' && loadingEl) loadingEl.classList.remove('hidden');
+            else if (viewName === 'error' && errorStateEl) errorStateEl.classList.remove('hidden');
+            else if (viewName === 'list' && novelListView) novelListView.classList.remove('hidden');
+            else if (viewName === 'detail' && novelDetailView) novelDetailView.classList.remove('hidden');
+            else if (viewName === 'reader' && chapterReaderView) chapterReaderView.classList.remove('hidden');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -519,8 +513,10 @@
                     synth.pause();
                     isPaused = true;
                     isSpeaking = true;
-                    document.getElementById('tts-play-icon').className = "fa-solid fa-play";
-                    document.getElementById('tts-status-text').innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Paused</span>`;
+                    const playIcon = document.getElementById('tts-play-icon');
+                    const statusText = document.getElementById('tts-status-text');
+                    if (playIcon) playIcon.className = "fa-solid fa-play";
+                    if (statusText) statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Paused</span>`;
                 }
             }
         }
@@ -535,8 +531,10 @@
                     synth.pause();
                     isPaused = true;
                     isSpeaking = true;
-                    document.getElementById('tts-play-icon').className = "fa-solid fa-play";
-                    document.getElementById('tts-status-text').innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Paused</span>`;
+                    const playIcon = document.getElementById('tts-play-icon');
+                    const statusText = document.getElementById('tts-status-text');
+                    if (playIcon) playIcon.className = "fa-solid fa-play";
+                    if (statusText) statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Paused</span>`;
                 } else if (isSpeaking) {
                     startSpeech(speechCharIndex);
                 }
@@ -550,18 +548,21 @@
         function toggleSpeech() {
             if (!synth) return;
 
+            const playIcon = document.getElementById('tts-play-icon');
+            const statusText = document.getElementById('tts-status-text');
+
             if (synth.speaking) {
                 if (synth.paused) {
                     synth.resume();
                     isPaused = false;
                     isSpeaking = true;
-                    document.getElementById('tts-play-icon').className = "fa-solid fa-pause";
-                    document.getElementById('tts-status-text').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>Playing audio...</span>`;
+                    if (playIcon) playIcon.className = "fa-solid fa-pause";
+                    if (statusText) statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>Playing audio...</span>`;
                 } else {
                     synth.pause();
                     isPaused = true;
-                    document.getElementById('tts-play-icon').className = "fa-solid fa-play";
-                    document.getElementById('tts-status-text').innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Paused</span>`;
+                    if (playIcon) playIcon.className = "fa-solid fa-play";
+                    if (statusText) statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Paused</span>`;
                 }
             } else {
                 startSpeech(speechCharIndex);
@@ -597,8 +598,10 @@
                 isSpeaking = false;
                 isPaused = false;
                 clearHighlights();
-                document.getElementById('tts-play-icon').className = "fa-solid fa-play";
-                document.getElementById('tts-status-text').innerHTML = `<span class="w-2 h-2 rounded-full bg-indigo-500"></span><span>Finished reading chapter</span>`;
+                const playIcon = document.getElementById('tts-play-icon');
+                const statusText = document.getElementById('tts-status-text');
+                if (playIcon) playIcon.className = "fa-solid fa-play";
+                if (statusText) statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-indigo-500"></span><span>Finished reading chapter</span>`;
                 
                 if (autoLoadNextChapter && currentNovelDetail && currentChapterIndex < currentNovelDetail.chapters.length - 1) {
                     navigateChapter(1);
@@ -612,14 +615,17 @@
                 isSpeaking = false;
                 isPaused = false;
                 clearHighlights();
-                document.getElementById('tts-play-icon').className = "fa-solid fa-play";
+                const playIcon = document.getElementById('tts-play-icon');
+                if (playIcon) playIcon.className = "fa-solid fa-play";
             };
 
             synth.speak(currentUtterance);
             isSpeaking = true;
             isPaused = false;
-            document.getElementById('tts-play-icon').className = "fa-solid fa-pause";
-            document.getElementById('tts-status-text').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>Playing audio...</span>`;
+            const playIcon = document.getElementById('tts-play-icon');
+            const statusText = document.getElementById('tts-status-text');
+            if (playIcon) playIcon.className = "fa-solid fa-pause";
+            if (statusText) statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span><span>Playing audio...</span>`;
         }
 
         function highlightAndScrollActiveElement(charIndex) {
@@ -679,8 +685,10 @@
                 synth.pause();
                 isPaused = true;
                 isSpeaking = true;
-                document.getElementById('tts-play-icon').className = "fa-solid fa-play";
-                document.getElementById('tts-status-text').innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Paused</span>`;
+                const playIcon = document.getElementById('tts-play-icon');
+                const statusText = document.getElementById('tts-status-text');
+                if (playIcon) playIcon.className = "fa-solid fa-play";
+                if (statusText) statusText.innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span><span>Paused</span>`;
             }
         }
 
@@ -701,9 +709,9 @@
                 globalNovels = await response.json();
 
                 if (hotResponse && hotResponse.ok) {
-                    hotNovelTitles = await hotResponse.json();
+                    hotNovelsList = await hotResponse.json();
                 } else {
-                    hotNovelTitles = [];
+                    hotNovelsList = [];
                 }
                 
                 await preloadGenres();
@@ -713,7 +721,7 @@
                 renderNewNovels();
                 handleRouting();
             } catch (err) {
-                errorMessageEl.textContent = err.message || "Failed to fetch novels list from cdn.";
+                if (errorMessageEl) errorMessageEl.textContent = err.message || "Failed to fetch novels list from cdn.";
                 switchView('error');
             }
         }
@@ -736,6 +744,7 @@
         }
 
         function renderGenresSidebar() {
+            if (!genresSidebar) return;
             genresSidebar.innerHTML = '';
             if (allGenresSet.size === 0) {
                 genresSidebar.innerHTML = '<p class="text-xs text-slate-400 col-span-2">No genres available.</p>';
@@ -753,6 +762,7 @@
         }
 
         function renderRecentNovels() {
+            if (!recentNovelsGrid) return;
             recentNovelsGrid.innerHTML = '';
             let recentList = [];
             
@@ -769,12 +779,12 @@
             }
 
             if (recentList.length === 0) {
-                recentNovelsSection.classList.add('hidden');
+                if (recentNovelsSection) recentNovelsSection.classList.add('hidden');
                 return;
             }
 
             recentList = recentList.slice(0, 4);
-            recentNovelsSection.classList.remove('hidden');
+            if (recentNovelsSection) recentNovelsSection.classList.remove('hidden');
 
             recentList.forEach(item => {
                 const card = document.createElement('div');
@@ -800,6 +810,7 @@
         }
 
         function renderNewNovels() {
+            if (!newNovelsGrid) return;
             newNovelsGrid.innerHTML = '';
             if (!globalNovels || globalNovels.length === 0) return;
 
@@ -809,7 +820,7 @@
                 const card = document.createElement('div');
                 card.className = "group bg-slate-800/60 border border-slate-700/60 rounded-xl overflow-hidden hover:border-indigo-500/50 transition duration-300 flex flex-col cursor-pointer shadow-md hover:shadow-indigo-500/10";
                 card.onclick = () => {
-                    searchInput.value = '';
+                    if (searchInput) searchInput.value = '';
                     updateUrlHash(novel.contentUrl);
                     loadNovelDetail(novel.contentUrl, true);
                 };
@@ -829,26 +840,27 @@
 
         function filterByGenre(genre) {
             currentGenreFilter = genre;
-            searchInput.value = '';
-            libraryHeading.textContent = `${genre} Novels`;
-            librarySubheading.textContent = `Showing stories in the ${genre} genre.`;
-            clearFilterBtn.classList.remove('hidden');
+            if (searchInput) searchInput.value = '';
+            if (libraryHeading) libraryHeading.textContent = `${genre} Novels`;
+            if (librarySubheading) librarySubheading.textContent = `Showing stories in the ${genre} genre.`;
+            if (clearFilterBtn) clearFilterBtn.classList.remove('hidden');
 
             const filtered = globalNovels.filter(novel => {
                 const genres = novelGenresCache[novel.contentUrl] || [];
                 return genres.includes(genre);
             });
 
-            setNovelsList(filtered);
-            renderGenresSidebar();
+            if (hotNovelContainer) hotNovelContainer.classList.add('hidden');
+            if (standardNovelSection) standardNovelSection.classList.remove('hidden');
+            renderFilteredGrid(filtered);
         }
 
         function clearGenreFilter() {
             currentGenreFilter = null;
-            libraryHeading.textContent = "HOT NOVEL 🔥";
-            librarySubheading.textContent = "Discover your next favorite story from our curated collection.";
-            clearFilterBtn.classList.add('hidden');
-            setNovelsList(globalNovels);
+            if (libraryHeading) libraryHeading.textContent = "HOT NOVEL 🔥";
+            if (librarySubheading) librarySubheading.textContent = "Discover your next favorite story from our curated collection.";
+            if (clearFilterBtn) clearFilterBtn.classList.add('hidden');
+            renderCurrentPage();
             renderGenresSidebar();
         }
 
@@ -863,115 +875,115 @@
             currentPage += direction;
             if (currentPage < 1) currentPage = 1;
             if (currentPage > totalPages) currentPage = totalPages;
-            renderCurrentPage();
+            renderFilteredGrid(displayedNovels);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function renderCurrentPage() {
-            const isDefaultView = !currentGenreFilter && currentPage === 1;
+        function renderFilteredGrid(novels) {
+            if (hotNovelContainer) hotNovelContainer.classList.add('hidden');
+            if (standardNovelSection) standardNovelSection.classList.remove('hidden');
+            if (novelGrid) novelGrid.innerHTML = '';
 
-            let hotNovelsList = [];
-            if (hotNovelTitles.length > 0) {
-                hotNovelsList = hotNovelTitles.map(title => globalNovels.find(n => n.novelTitle.toLowerCase() === title.toLowerCase())).filter(Boolean);
+            const totalPages = Math.ceil(novels.length / itemsPerPage) || 1;
+            if (novels.length === 0) {
+                if (noResultsEl) noResultsEl.classList.remove('hidden');
+                if (paginationContainer) paginationContainer.classList.add('hidden');
+                return;
+            } else {
+                if (noResultsEl) noResultsEl.classList.add('hidden');
             }
-            if (hotNovelsList.length === 0) {
-                hotNovelsList = globalNovels.slice(0, 13);
+
+            if (totalPages > 1) {
+                if (paginationContainer) paginationContainer.classList.remove('hidden');
+                if (prevPageBtn) prevPageBtn.disabled = currentPage <= 1;
+                if (nextPageBtn) nextPageBtn.disabled = currentPage >= totalPages;
+                if (pageInfoEl) pageInfoEl.textContent = `Page ${currentPage} of ${totalPages}`;
+            } else {
+                if (paginationContainer) paginationContainer.classList.add('hidden');
             }
 
-            if (isDefaultView && hotNovelsList.length >= 13) {
-                hotNovelContainer.classList.remove('hidden');
-                standardNovelSection.classList.add('hidden');
-                paginationContainer.classList.add('hidden');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, novels.length);
+            const pageItems = novels.slice(startIndex, endIndex);
 
-                const featured = hotNovelsList[0];
-                featuredNovelCard.innerHTML = `
-                    <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition duration-300 flex flex-col h-full shadow-xl relative group">
-                        <div class="aspect-[4/5] sm:aspect-[3/4] lg:h-full relative overflow-hidden bg-slate-900">
-                            <img src="${featured.coverImageUrl}" alt="${featured.novelTitle}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=60'">
-                            <span class="absolute bottom-3 left-3 bg-emerald-600 text-xs font-bold text-white px-2.5 py-1 rounded-md shadow">FULL</span>
-                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
-                                <h3 class="text-xl sm:text-2xl font-extrabold text-white group-hover:text-indigo-400 transition leading-tight">${featured.novelTitle}</h3>
-                            </div>
-                        </div>
+            pageItems.forEach((novel) => {
+                const card = document.createElement('div');
+                card.className = "group bg-slate-800/60 border border-slate-700/60 rounded-xl overflow-hidden hover:border-indigo-500/50 transition duration-300 flex flex-col cursor-pointer shadow-md hover:shadow-indigo-500/10 hover:shadow-xl";
+                card.onclick = () => {
+                    if (searchInput) searchInput.value = '';
+                    updateUrlHash(novel.contentUrl);
+                    loadNovelDetail(novel.contentUrl, true);
+                };
+                
+                card.innerHTML = `
+                    <div class="aspect-[3/4] overflow-hidden bg-slate-900 relative">
+                        <img src="${novel.coverImageUrl}" alt="${novel.novelTitle}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=60'">
+                        <span class="absolute bottom-2 left-2 bg-emerald-600 text-[10px] font-bold text-white px-2 py-0.5 rounded shadow">FULL</span>
+                    </div>
+                    <div class="p-3.5 flex-1 flex flex-col justify-between">
+                        <h3 class="text-sm font-semibold text-slate-200 line-clamp-2 group-hover:text-indigo-400 transition">${novel.novelTitle}</h3>
                     </div>
                 `;
-                featuredNovelCard.onclick = () => {
-                    searchInput.value = '';
-                    updateUrlHash(featured.contentUrl);
-                    loadNovelDetail(featured.contentUrl, true);
-                };
+                if (novelGrid) novelGrid.appendChild(card);
+            });
+        }
 
-                smallNovelsGrid.innerHTML = '';
-                const smallNovels = hotNovelsList.slice(1, 13);
-                smallNovels.forEach(novel => {
-                    const card = document.createElement('div');
-                    card.className = "group bg-slate-800/60 border border-slate-700/60 rounded-xl overflow-hidden hover:border-indigo-500/50 transition duration-300 flex flex-col cursor-pointer shadow-md hover:shadow-indigo-500/10";
-                    card.onclick = () => {
-                        searchInput.value = '';
-                        updateUrlHash(novel.contentUrl);
-                        loadNovelDetail(novel.contentUrl, true);
-                    };
+        function renderCurrentPage() {
+            const isDefaultView = !currentGenreFilter && currentPage === 1 && (!searchInput || !searchInput.value);
 
-                    card.innerHTML = `
-                        <div class="aspect-[3/4] overflow-hidden bg-slate-900 relative">
-                            <img src="${novel.coverImageUrl}" alt="${novel.novelTitle}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=60'">
-                            <span class="absolute bottom-1.5 left-1.5 bg-emerald-600 text-[9px] font-bold text-white px-1.5 py-0.5 rounded shadow">FULL</span>
-                        </div>
-                        <div class="p-2.5 flex-1 flex flex-col justify-between">
-                            <h4 class="text-xs font-semibold text-slate-200 line-clamp-2 group-hover:text-indigo-400 transition leading-tight">${novel.novelTitle}</h4>
-                        </div>
-                    `;
-                    smallNovelsGrid.appendChild(card);
-                });
+            if (isDefaultView && hotNovelsList.length >= 13) {
+                if (hotNovelContainer) hotNovelContainer.classList.remove('hidden');
+                if (standardNovelSection) standardNovelSection.classList.add('hidden');
+                if (paginationContainer) paginationContainer.classList.add('hidden');
 
-            } else {
-                hotNovelContainer.classList.add('hidden');
-                standardNovelSection.classList.remove('hidden');
-                novelGrid.innerHTML = '';
-
-                const totalPages = Math.ceil(displayedNovels.length / itemsPerPage) || 1;
-                if (displayedNovels.length === 0) {
-                    noResultsEl.classList.remove('hidden');
-                    paginationContainer.classList.add('hidden');
-                    return;
-                } else {
-                    noResultsEl.classList.add('hidden');
-                }
-
-                if (totalPages > 1) {
-                    paginationContainer.classList.remove('hidden');
-                    prevPageBtn.disabled = currentPage <= 1;
-                    nextPageBtn.disabled = currentPage >= totalPages;
-                    pageInfoEl.textContent = `Page ${currentPage} of ${totalPages}`;
-                } else {
-                    paginationContainer.classList.add('hidden');
-                }
-
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = Math.min(startIndex + itemsPerPage, displayedNovels.length);
-                const pageItems = displayedNovels.slice(startIndex, endIndex);
-
-                pageItems.forEach((novel) => {
-                    const card = document.createElement('div');
-                    card.className = "group bg-slate-800/60 border border-slate-700/60 rounded-xl overflow-hidden hover:border-indigo-500/50 transition duration-300 flex flex-col cursor-pointer shadow-md hover:shadow-indigo-500/10 hover:shadow-xl";
-                    card.onclick = () => {
-                        searchInput.value = '';
-                        updateUrlHash(novel.contentUrl);
-                        loadNovelDetail(novel.contentUrl, true);
-                    };
-                    
-                    card.innerHTML = `
-                        <div class="aspect-[3/4] overflow-hidden bg-slate-900 relative">
-                            <img src="${novel.coverImageUrl}" alt="${novel.novelTitle}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=60'">
-                            <span class="absolute bottom-2 left-2 bg-emerald-600 text-[10px] font-bold text-white px-2 py-0.5 rounded shadow">FULL</span>
-                        </div>
-                        <div class="p-3.5 flex-1 flex flex-col justify-between">
-                            <h3 class="text-sm font-semibold text-slate-200 line-clamp-2 group-hover:text-indigo-400 transition">${novel.novelTitle}</h3>
+                const featured = hotNovelsList[0];
+                if (featuredNovelCard) {
+                    featuredNovelCard.innerHTML = `
+                        <div class="bg-slate-800/60 border border-slate-700/60 rounded-2xl overflow-hidden hover:border-indigo-500/50 transition duration-300 flex flex-col h-full shadow-xl relative group">
+                            <div class="aspect-[4/5] sm:aspect-[3/4] lg:h-full relative overflow-hidden bg-slate-900">
+                                <img src="${featured.coverImageUrl}" alt="${featured.novelTitle}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=60'">
+                                <span class="absolute bottom-3 left-3 bg-emerald-600 text-xs font-bold text-white px-2.5 py-1 rounded-md shadow">FULL</span>
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent flex flex-col justify-end p-6">
+                                    <h3 class="text-xl sm:text-2xl font-extrabold text-white group-hover:text-indigo-400 transition leading-tight">${featured.novelTitle}</h3>
+                                </div>
+                            </div>
                         </div>
                     `;
-                    novelGrid.appendChild(card);
-                });
+                    featuredNovelCard.onclick = () => {
+                        if (searchInput) searchInput.value = '';
+                        updateUrlHash(featured.contentUrl, null, featured);
+                        loadNovelDetail(featured.contentUrl, true, featured.coverImageUrl);
+                    };
+                }
+
+                if (smallNovelsGrid) {
+                    smallNovelsGrid.innerHTML = '';
+                    const smallNovels = hotNovelsList.slice(1, 13);
+                    smallNovels.forEach(novel => {
+                        const card = document.createElement('div');
+                        card.className = "group bg-slate-800/60 border border-slate-700/60 rounded-xl overflow-hidden hover:border-indigo-500/50 transition duration-300 flex flex-col cursor-pointer shadow-md hover:shadow-indigo-500/10";
+                        card.onclick = () => {
+                            if (searchInput) searchInput.value = '';
+                            updateUrlHash(novel.contentUrl);
+                            loadNovelDetail(novel.contentUrl, true, novel.coverImageUrl);
+                        };
+
+                        card.innerHTML = `
+                            <div class="aspect-[3/4] overflow-hidden bg-slate-900 relative">
+                                <img src="${novel.coverImageUrl}" alt="${novel.novelTitle}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500" onerror="this.src='https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=60'">
+                                <span class="absolute bottom-1.5 left-1.5 bg-emerald-600 text-[9px] font-bold text-white px-1.5 py-0.5 rounded shadow">FULL</span>
+                            </div>
+                            <div class="p-2.5 flex-1 flex flex-col justify-between">
+                                <h4 class="text-xs font-semibold text-slate-200 line-clamp-2 group-hover:text-indigo-400 transition leading-tight">${novel.novelTitle}</h4>
+                            </div>
+                        `;
+                        smallNovelsGrid.appendChild(card);
+                    });
+                }
+                return;
             }
+
+            renderFilteredGrid(displayedNovels);
         }
 
         async function handleRouting() {
@@ -987,7 +999,16 @@
 
             if (novelUrl) {
                 const decodedUrl = decodeURIComponent(novelUrl);
-                await loadNovelDetail(decodedUrl, false);
+                // Try to find cover from hot list or global list
+                let foundCover = null;
+                const hotMatch = hotNovelsList.find(n => n.contentUrl === decodedUrl);
+                if (hotMatch) foundCover = hotMatch.coverImageUrl;
+                else {
+                    const globalMatch = globalNovels.find(n => n.contentUrl === decodedUrl);
+                    if (globalMatch) foundCover = globalMatch.coverImageUrl;
+                }
+
+                await loadNovelDetail(decodedUrl, false, foundCover);
                 if (chapterParam !== null && currentNovelDetail && currentNovelDetail.chapters) {
                     const chapterIdx = parseInt(chapterParam, 10) - 1;
                     if (currentNovelDetail.chapters[chapterIdx]) {
@@ -1008,15 +1029,19 @@
             if (currentGenreFilter) {
                 clearGenreFilter();
             }
+            if (!q) {
+                renderCurrentPage();
+                return;
+            }
             const filtered = globalNovels.filter(n => n.novelTitle.toLowerCase().includes(q));
-            setNovelsList(filtered);
-            if (window.location.hash && novelListView.classList.contains('hidden') && q.length > 0) {
+            renderFilteredGrid(filtered);
+            if (window.location.hash && novelListView && novelListView.classList.contains('hidden') && q.length > 0) {
                 updateUrlHash(null);
                 switchView('list');
             }
         }
 
-        async function loadNovelDetail(contentUrl, updateHash = true) {
+        async function loadNovelDetail(contentUrl, updateHash = true, customCoverUrl = null) {
             stopSpeech();
             if (currentContentUrl !== contentUrl || !currentNovelDetail) {
                 switchView('loading');
@@ -1034,18 +1059,33 @@
                 }
             }
 
-            renderNovelDetail(currentNovelDetail);
+            renderNovelDetail(currentNovelDetail, customCoverUrl);
             switchView('detail');
             if (updateHash) {
                 updateUrlHash(contentUrl);
             }
         }
 
-        function renderNovelDetail(detail) {
-            document.getElementById('detail-cover').src = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjI9QFa7YLR07CtYS-rbcRjFPcqyzmcfo5ONTJVqNcUKJ2gh2v1fvSm8MJVdaK8ZyRDTIgf1UbdTmoXRSoew-ILxwS90y6-dg4jKWhyphenhypheny2CWuIpwjROc6POxZ4DfsPh1UHRGgQFDY18xD9_L3O9uQQFFGB5ErEJPFi_OQTJj7PV92yy2YxK5eel1faMH22EL/s320/video2.jpg";
-            document.getElementById('detail-title').textContent = detail.novelTitle;
-            document.getElementById('detail-author').textContent = detail.author || "Unknown";
-            document.getElementById('detail-description').textContent = detail.description || "No description available.";
+        function renderNovelDetail(detail, customCoverUrl = null) {
+            const detailCover = document.getElementById('detail-cover');
+            const detailTitle = document.getElementById('detail-title');
+            const detailAuthor = document.getElementById('detail-author');
+            const detailDesc = document.getElementById('detail-description');
+
+            let coverToUse = customCoverUrl;
+            if (!coverToUse) {
+                const hotMatch = hotNovelsList.find(n => n.contentUrl === currentContentUrl);
+                if (hotMatch) coverToUse = hotMatch.coverImageUrl;
+                else {
+                    const globalMatch = globalNovels.find(n => n.contentUrl === currentContentUrl);
+                    if (globalMatch) coverToUse = globalMatch.coverImageUrl;
+                }
+            }
+
+            if (detailCover) detailCover.src = coverToUse || "https://images.unsplash.com/photo-1543002588-bfa74002ed7e?auto=format&fit=crop&w=500&q=60";
+            if (detailTitle) detailTitle.textContent = detail.novelTitle;
+            if (detailAuthor) detailAuthor.textContent = detail.author || "Unknown";
+            if (detailDesc) detailDesc.textContent = detail.description || "No description available.";
             
             const savedProgressKey = `novel_progress_${currentContentUrl}`;
             const savedProgress = localStorage.getItem(savedProgressKey);
@@ -1055,7 +1095,8 @@
                 const chapIdx = parseInt(savedProgress, 10);
                 if (detail.chapters && detail.chapters[chapIdx]) {
                     const chapTitle = detail.chapters[chapIdx].title;
-                    document.getElementById('continue-reading-text').textContent = `Resume at ${chapTitle}`;
+                    const continueText = document.getElementById('continue-reading-text');
+                    if (continueText) continueText.textContent = `Resume at ${chapTitle}`;
                     const continueBtn = document.getElementById('continue-reading-btn');
                     if (continueBtn) {
                         continueBtn.onclick = () => {
@@ -1063,39 +1104,43 @@
                             loadChapter(chapIdx, true);
                         };
                     }
-                    continueContainer.classList.remove('hidden');
+                    if (continueContainer) continueContainer.classList.remove('hidden');
                 } else {
-                    continueContainer.classList.add('hidden');
+                    if (continueContainer) continueContainer.classList.add('hidden');
                 }
             } else {
-                continueContainer.classList.add('hidden');
+                if (continueContainer) continueContainer.classList.add('hidden');
             }
 
             const genresEl = document.getElementById('detail-genres');
-            genresEl.innerHTML = '';
-            if (detail.genre && Array.isArray(detail.genre)) {
-                detail.genre.forEach(g => {
-                    const tag = document.createElement('button');
-                    tag.className = "text-xs px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-medium hover:bg-indigo-600 hover:text-white transition cursor-pointer";
-                    tag.textContent = g;
-                    tag.onclick = (e) => {
-                        e.stopPropagation();
-                        goHome();
-                        filterByGenre(g);
-                    };
-                    genresEl.appendChild(tag);
-                });
+            if (genresEl) {
+                genresEl.innerHTML = '';
+                if (detail.genre && Array.isArray(detail.genre)) {
+                    detail.genre.forEach(g => {
+                        const tag = document.createElement('button');
+                        tag.className = "text-xs px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 font-medium hover:bg-indigo-600 hover:text-white transition cursor-pointer";
+                        tag.textContent = g;
+                        tag.onclick = (e) => {
+                            e.stopPropagation();
+                            goHome();
+                            filterByGenre(g);
+                        };
+                        genresEl.appendChild(tag);
+                    });
+                }
             }
 
-            document.getElementById('chapter-count').textContent = `${detail.chapters ? detail.chapters.length : 0} Chapters`;
+            const chapterCountEl = document.getElementById('chapter-count');
+            if (chapterCountEl) chapterCountEl.textContent = `${detail.chapters ? detail.chapters.length : 0} Chapters`;
             renderChapterRanges(detail.chapters || []);
         }
 
         function renderChapterRanges(chapters) {
             const rangesContainer = document.getElementById('chapter-ranges');
+            if (!rangesContainer) return;
             rangesContainer.innerHTML = '';
 
-            if (chapters.length === 0) return;
+            if (!chapters || chapters.length === 0) return;
 
             const chunkSize = 100;
             const totalRanges = Math.ceil(chapters.length / chunkSize);
@@ -1122,6 +1167,7 @@
 
         function renderChapterListChunk(chapters, startIndex, endIndex) {
             const chaptersListEl = document.getElementById('chapters-list');
+            if (!chaptersListEl) return;
             chaptersListEl.innerHTML = '';
 
             for (let idx = startIndex; idx < endIndex; idx++) {
@@ -1153,8 +1199,10 @@
             const chapterMeta = currentNovelDetail.chapters[index];
 
             switchView('reader');
-            document.getElementById('reader-novel-title').textContent = currentNovelDetail.novelTitle;
-            document.getElementById('reader-chapter-title').textContent = chapterMeta.title;
+            const readerNovelTitle = document.getElementById('reader-novel-title');
+            const readerChapterTitle = document.getElementById('reader-chapter-title');
+            if (readerNovelTitle) readerNovelTitle.textContent = currentNovelDetail.novelTitle;
+            if (readerChapterTitle) readerChapterTitle.textContent = chapterMeta.title;
 
             const contentEl = document.getElementById('chapter-content');
             const loadingChap = document.getElementById('chapter-loading');
@@ -1162,12 +1210,12 @@
             const prevBtn = document.getElementById('prev-chapter-btn');
             const nextBtn = document.getElementById('next-chapter-btn');
 
-            contentEl.classList.add('hidden');
-            errorChap.classList.add('hidden');
-            loadingChap.classList.remove('hidden');
+            if (contentEl) contentEl.classList.add('hidden');
+            if (errorChap) errorChap.classList.add('hidden');
+            if (loadingChap) loadingChap.classList.remove('hidden');
 
-            prevBtn.disabled = index <= 0;
-            nextBtn.disabled = index >= currentNovelDetail.chapters.length - 1;
+            if (prevBtn) prevBtn.disabled = index <= 0;
+            if (nextBtn) nextBtn.disabled = index >= currentNovelDetail.chapters.length - 1;
 
             if (updateHash) {
                 updateUrlHash(currentContentUrl, index);
@@ -1220,13 +1268,15 @@
                 fullChapterText = plainText;
                 speechCharIndex = 0;
 
-                contentEl.innerHTML = textHtml;
-                loadingChap.classList.add('hidden');
-                contentEl.classList.remove('hidden');
+                if (contentEl) contentEl.innerHTML = textHtml;
+                if (loadingChap) loadingChap.classList.add('hidden');
+                if (contentEl) contentEl.classList.remove('hidden');
             } catch (err) {
-                loadingChap.classList.add('hidden');
-                errorChap.classList.add('hidden');
-                errorChap.classList.remove('hidden');
+                if (loadingChap) loadingChap.classList.add('hidden');
+                if (errorChap) {
+                    errorChap.classList.add('hidden');
+                    errorChap.classList.remove('hidden');
+                }
             }
         }
 
@@ -1249,11 +1299,11 @@
 
         function goHome() {
             stopSpeech();
-            searchInput.value = '';
+            if (searchInput) searchInput.value = '';
             currentGenreFilter = null;
-            libraryHeading.textContent = "HOT NOVEL 🔥";
-            librarySubheading.textContent = "Discover your next favorite story from our curated collection.";
-            clearFilterBtn.classList.add('hidden');
+            if (libraryHeading) libraryHeading.textContent = "HOT NOVEL 🔥";
+            if (librarySubheading) librarySubheading.textContent = "Discover your next favorite story from our curated collection.";
+            if (clearFilterBtn) clearFilterBtn.classList.add('hidden');
             updateUrlHash(null);
             setNovelsList(globalNovels);
             renderGenresSidebar();
