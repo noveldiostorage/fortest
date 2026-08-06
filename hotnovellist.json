@@ -1,15 +1,67 @@
 [
-  "New Novel Title 3",
-  "Richest Man: Getting 7 Billion Red Pockets To Start With",
-  "New Novel Title 5",
-  "New Novel Title 7",
-  "New Novel Title 6",
-  "New Novel Title 10",
-  "New Novel Title 11",
-  "New Novel Title 12",
-  "New Novel Title 20",
-  "New Novel Title 21",
-  "New Novel Title 30",
-  "New Novel Title 31",
-  "New Novel Title 40"
+  {
+    "novelTitle": "Richest Man: Getting 7 Billion Red Pockets To Start With",
+    "coverImageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjI9QFa7YLR07CtYS-rbcRjFPcqyzmcfo5ONTJVqNcUKJ2gh2v1fvSm8MJVdaK8ZyRDTIgf1UbdTmoXRSoew-ILxwS90y6-dg4jKWhyphenhypheny2CWuIpwjROc6POxZ4DfsPh1UHRGgQFDY18xD9_L3O9uQQFFGB5ErEJPFi_OQTJj7PV92yy2YxK5eel1faMH22EL/s320/video2.jpg",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 2",
+    "coverImageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjI9QFa7YLR07CtYS-rbcRjFPcqyzmcfo5ONTJVqNcUKJ2gh2v1fvSm8MJVdaK8ZyRDTIgf1UbdTmoXRSoew-ILxwS90y6-dg4jKWhyphenhypheny2CWuIpwjROc6POxZ4DfsPh1UHRGgQFDY18xD9_L3O9uQQFFGB5ErEJPFi_OQTJj7PV92yy2YxK5eel1faMH22EL/s320/video2.jpg",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/new-novel@mhttps://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.jsonain/chapters/vol1/1.json"
+  },
+  {
+    "novelTitle": "Swallowed-Star",
+    "coverImageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjWcF0DRfRz3if685qjhT5QIMWfKr6epv60y5m7BoXTWs8tNu-OEnTBFqDuHjUPhR20BGr1CYjSE3XRiKrbrSEP-V6rrmsbKsYAGInuEFwoVI0C7qS-XyTZFARA2OraQ_obVbUpnphQ5rPGyGnaXnTMziq2hoUJI-_eJRCnroFx_srzotSTMyR7Gxiung/s320/swallowed-star%20cover%20image.jpg",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Swallowed-Star@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 4",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 5",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 6",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 7",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 8",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 9",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 10",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 11",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 12",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  },
+  {
+    "novelTitle": "New Novel Title 13",
+    "coverImageUrl": "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
+    "contentUrl": "https://cdn.jsdelivr.net/gh/noveldiostorage/Richest-Man-Getting-7-Billion-Red-Pockets-To-Start-With@main/index.json"
+  }
 ]
